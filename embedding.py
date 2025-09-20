@@ -7,7 +7,7 @@ from sentence_transformers import SentenceTransformer
 import chromadb
 from config import DATA_DIR, EMBEDDING_MODEL_NAME, COLLECTION_NAME
 
-def create_embedding(COLLECTION_NAME):
+def create_embeddings(COLLECTION_NAME):
     data_dir = DATA_DIR
     pdf_files = os.listdir(data_dir)
     
