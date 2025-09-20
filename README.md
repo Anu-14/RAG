@@ -39,10 +39,13 @@ Open config.py to set parameters such as embedding model, data_dir, etc.
 python embeddings.py
 ```
 6. Configure GOOGLE_API_KEY:
+For colab:
 ```
 from google.colab import userdata
 import os
 os.environ["GOOGLE_API_KEY"] = userdata.get('GOOGLE_API_KEY')
+
+Otherwise set the GOOGLE_API_KEY in config.py and import in query_decomposition.py and rag_agent.py, 
 ```
 6. Run the pipeline with user query
 ```
