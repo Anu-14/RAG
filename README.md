@@ -1,6 +1,6 @@
-# RAG
+# Agentic RAG
 
-A Python implementation for Retrieval-Augmented Generation (RAG) — letting you augment large language model responses with relevant information retrieved from an external corpus or knowledge base.
+A Python implementation for Agentic Retrieval-Augmented Generation (RAG) — letting you augment large language model responses with relevant information retrieved from an external corpus or knowledge base.
 
 This project demonstrates a basic pipeline for performing RAG: you provide a dataset (documents), chunk it, compute embeddings, retrieve relevant chunks for a user query, then generate an answer grounded in the retrieved context.
 
