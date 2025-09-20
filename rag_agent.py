@@ -4,6 +4,8 @@ from google.colab import userdata
 import os
 import re
 from rag import rag_query
+from query_decomposition import decompose_query
+
 
 try:
     synthesis_model = genai.GenerativeModel('gemini-2.5-flash') # Changed to gemini-2.5-flash as requested
