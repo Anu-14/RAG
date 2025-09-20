@@ -40,6 +40,9 @@ def decompose_query(query: str, model: genai.GenerativeModel) -> list[str]:
         You are an intelligent query agent designed to answer complex questions using a structured, multi-step approach. 
         Your task is to break down complex queries, perform multiple retrievals if needed, and synthesize coherent, accurate responses.
 
+        The database only consists of NVIDIA, GOOGLE and MICROSOFT documents from 2022 to 2024. So, \
+        if the companies are not mentioned in query, consider these three companies and form the sub-queries accordingly.
+       
         Query Decomposition:
           - Analyze the user’s question to determine if it involves multiple aspects or comparative elements.
           - Break the question into smaller, queries if they need retrieval.
