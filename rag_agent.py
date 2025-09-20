@@ -133,7 +133,7 @@ def agentic_rag_query(complex_query: str, collection, embedding_model, decomposi
         "sources": structured_sources # Use the structured_sources list
     }
 
-    return json.dumps(result, indent=4)
+    return result
 
 if __name__=="__main__":
     complex_query = "Compare the revenue growth and key risks of Microsoft and Google in 2023."
