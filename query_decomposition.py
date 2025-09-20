@@ -64,7 +64,8 @@ def decompose_query(query: str, model: genai.GenerativeModel) -> list[str]:
         print(f"Error during query decomposition: {e}")
         return [query] 
 
-complex_query = "Compare the revenue growth and key risks of Microsoft and Google in 2023."
-sub_queries = decompose_query(complex_query, decomposition_model)
-print("Original Query:", complex_query)
-print("Decomposed Sub-queries:", sub_queries)
+if __name__=="__main__":
+    complex_query = "Compare the revenue growth and key risks of Microsoft and Google in 2023."
+    sub_queries = decompose_query(complex_query, decomposition_model)
+    print("Original Query:", complex_query)
+    print("Decomposed Sub-queries:", sub_queries)
