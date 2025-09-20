@@ -57,10 +57,10 @@ Chunking
 Split documents into smaller chunks to increase retrieval granularity.
 
 Embedding
-Transform text chunks to vector embeddings with (for example) a pre-trained embedding model.
+Transform text chunks to vector embeddings with a pre-trained embedding model.
 
 Indexing / Storage
-Store embeddings + metadata in a structure or database enabling nearest-neighbor searches.
+Store embeddings + metadata in chromaDB enabling nearest-neighbor searches.
 
 Query processing
   a. Possibly decompose query into sub-queries.
@@ -68,4 +68,4 @@ Query processing
   c. Retrieve top-k relevant chunks.
 
 Generation
-Forward retrieved context to LLM for answer.
+Forward the retrieved context for each subquery to LLM for answer.
