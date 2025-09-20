@@ -40,9 +40,9 @@ For colab:
 from google.colab import userdata
 import os
 os.environ["GOOGLE_API_KEY"] = userdata.get('GOOGLE_API_KEY')
-
-Otherwise set the GOOGLE_API_KEY in config.py and import in query_decomposition.py and rag_agent.py, 
 ```
+Otherwise set the GOOGLE_API_KEY in config.py and import in query_decomposition.py and rag_agent.py, 
+
 6. Run the pipeline with user query
 ```
 python main.py --query_file <path to queries - defaults to sample_queries.txt> 
