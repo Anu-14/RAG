@@ -34,11 +34,7 @@ Put documents you want to use for retrieval inside the data/ folder (or update c
 Make sure they are in a form the chunker can handle (pdf)
 4. Configure settings
 Open config.py to set parameters such as embedding model, data_dir, etc.
-5. Create embeddings
-```
-python embeddings.py
-```
-6. Configure GOOGLE_API_KEY:
+5. Configure GOOGLE_API_KEY:
 For colab:
 ```
 from google.colab import userdata
