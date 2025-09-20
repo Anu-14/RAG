@@ -3,6 +3,7 @@ import google.generativeai as genai
 from google.colab import userdata
 import os
 import re
+from rag import rag_query
 
 # Ensure the Gemini model for synthesis is initialized
 # Use an appropriate Gemini model name, e.g., 'gemini-1.5-flash-latest' or 'gemini-1.0-pro'
