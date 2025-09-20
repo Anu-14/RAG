@@ -5,17 +5,15 @@ import os
 import re
 from rag import rag_query
 
-# Ensure the Gemini model for synthesis is initialized
-# Use an appropriate Gemini model name, e.g., 'gemini-1.5-flash-latest' or 'gemini-1.0-pro'
 try:
-    synthesis_model = genai.GenerativeModel('gemini-1.5-flash-latest')
+    synthesis_model = genai.GenerativeModel('gemini-2.5-flash') # Changed to gemini-2.5-flash as requested
 except Exception as e:
     print(f"Could not initialize synthesis model: {e}")
     print("Please ensure you have access to the specified Gemini model and your API key is correct.")
     synthesis_model = None # Set to None if model initialization fails
 
 
-def agentic_rag_query(complex_query: str, collection, embedding_model, decomposition_model: genai.GenerativeModel, synthesis_model: genai.GenerativeModel, n_results_per_subquery: int = 7):
+def agentic_rag_query(complex_query: str, collection, embedding_model, decomposition_model: genai.GenerativeModel, synthesis_model: genai.GenerativeModel, n_results_per_subquery: int = 3):
     """
     Executes an agentic RAG query by decomposing the complex query, performing
     multi-step retrieval, and synthesizing the results.
@@ -77,8 +75,8 @@ def agentic_rag_query(complex_query: str, collection, embedding_model, decomposi
     print("Synthesizing final answer...")
     try:
         synthesis_prompt = f"""\
-        You are an expert financial assistant. You are given a user query and a set of retrieved context chunks that contain relevant information. 
-        Your task is to generate a clear, concise, and well-structured final answer.
+        You are an expert financial assistant. You are given a user query and a set of retrieved context chunks that contain relevant information.
+        Your task is to synthesize the information to answer the query and provide your reasoning based *only* on the provided context.
 
         Instructions:
         1. Read the user query carefully.
@@ -87,31 +85,48 @@ def agentic_rag_query(complex_query: str, collection, embedding_model, decomposi
         4. If multiple chunks contribute, synthesize them into a single coherent response.
         5. If the query is comparative, highlight differences, similarities, or trends.
         6. If information is missing or not found in the chunks, state that clearly instead of guessing.
+        7. Provide your reasoning for how you arrived at the answer based *only* on the provided context.
 
         Output Requirements:
-        - Final answer should be factual, concise, and directly address the user query.
-        - Present information in a structured form (bullet points, tables, or short paragraphs) if appropriate.
-        - Do not include irrelevant details or repeat text verbatim from chunks unless necessary.
+        - Your output *must* be a strict JSON object with two keys: "answer" and "reasoning".
+        - The value associated with "answer" should be a factual, concise, and well-structured response to the user query.
+        - The value associated with "reasoning" should explain how the provided context was used to construct the answer.
+        - Do not include any other text outside the JSON object.
         - Never invent information not supported by the chunks.
 
         Context:
         {combined_context}
 
-        Synthesized Answer:
+        User Query: {complex_query}
+
+        JSON Output:
         """
         synthesis_response = synthesis_model.generate_content(synthesis_prompt)
-        final_answer = synthesis_response.text.strip()
+        synthesis_output = synthesis_response.text.strip()
+
+        # Attempt to parse the JSON output
+        try:
+            parsed_output = json.loads(synthesis_output.strip('```json'))
+            final_answer = parsed_output.get("answer", "Answer not found in JSON.")
+            synthesis_reasoning = parsed_output.get("reasoning", "Reasoning not found in JSON.")
+        except json.JSONDecodeError as e:
+            print(f"Error decoding JSON from synthesis model: {e}")
+            print(f"Synthesis output: {synthesis_output}")
+            final_answer = "Error: Could not parse synthesis model output as JSON."
+            synthesis_reasoning = f"Error decoding JSON: {e}. Raw output: {synthesis_output}"
+
         print("Synthesis complete.")
     except Exception as e:
         print(f"Error during synthesis: {e}")
         final_answer = "Error during synthesis."
+        synthesis_reasoning = f"Error during synthesis: {e}"
 
 
     # Step 4: Format Output as JSON
     result = {
         "question": complex_query,
         "answer": final_answer,
-        "reasoning": "Query decomposed, multi-step retrieval performed, and results synthesized.",
+        "reasoning": synthesis_reasoning, # Use the synthesis_reasoning
         "sub_queries": sub_queries,
         "sources": structured_sources # Use the structured_sources list
     }
