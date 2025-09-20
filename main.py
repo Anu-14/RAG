@@ -2,7 +2,8 @@ import argparse
 from sentence_transformers import SentenceTransformer
 import chromadb
 
-# Import your function
+import json
+import google.generativeai as genai
 from rag_agent import agentic_rag_query  
 from config import COLLECTION_NAME, EMBEDDING_MODEL_NAME
 
@@ -26,7 +27,7 @@ def main():
 
     # Load other models
     decomposition_model = genai.GenerativeModel('gemini-2.5-flash')
-    synthesis_model = genai.GenerativeModel('gemini-1.5-flash-latest')
+    synthesis_model = genai.GenerativeModel('gemini-2.5-flash')
 
     # Run the query
     complex_query = args.query
