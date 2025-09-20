@@ -41,9 +41,9 @@ python embeddings.py
 6. Run the pipeline with user query
 ```
 python main.py --query "Compare the key risk factors of Microsoft and Google in 2023"
+```
 
-
-How It Works (High-Level Pipeline)
+### How It Works (High-Level Pipeline)
 
 Document ingestion
 Load documents from data/.
