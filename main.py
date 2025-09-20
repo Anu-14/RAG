@@ -3,16 +3,17 @@ from sentence_transformers import SentenceTransformer
 import chromadb
 import json
 import google.generativeai as genai
-from rag_agent import agentic_rag_query
+from rag_agent import agentic_rag_query # Assuming agentic_rag_query returns a Python dict
 from config import COLLECTION_NAME, EMBEDDING_MODEL_NAME
+from embedding import create_embeddings
 
 def main():
     parser = argparse.ArgumentParser(description="Run Agentic RAG Query with multiple queries.")
     parser.add_argument(
         "--query_file",
         type=str,
-        required=True,
-        help="Path to a txt file containing a list of queries"
+        default="sample_queries.txt",
+        help="Path to a text file containing queries, one per line"
     )
     parser.add_argument(
         "--output_file",
@@ -23,7 +24,7 @@ def main():
 
     args = parser.parse_args()
 
-    # Load queries from the text file
+    # Load queries from the text file, one per line
     try:
         with open(args.query_file, 'r') as f:
             queries = [line.strip() for line in f if line.strip()] # Read lines and remove empty ones
@@ -47,7 +48,8 @@ def main():
         collection = client.get_collection(COLLECTION_NAME)
     except Exception as e:
         print(f"Error getting collection: {e}")
-        print(f"Please ensure the collection '{COLLECTION_NAME}' exists and the embedding.py script has been run.")
+        print(f"Creating the collection '{COLLECTION_NAME}' ")
+        create_embeddings(COLLECTION_NAME)
         return
 
 
@@ -58,10 +60,11 @@ def main():
     results = []
     for query in queries:
         print(f"Processing query: {query}")
-        agentic_result_json = agentic_rag_query(
+        # Assuming agentic_rag_query now returns a Python dictionary
+        agentic_result_dict = agentic_rag_query(
             query, collection, embedding_model, decomposition_model, synthesis_model
         )
-        results.append(agentic_result_json)
+        results.append(agentic_result_dict)
 
     # Save results to a JSON file
     try:
