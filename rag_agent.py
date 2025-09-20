@@ -15,7 +15,7 @@ except Exception as e:
     synthesis_model = None # Set to None if model initialization fails
 
 
-def agentic_rag_query(complex_query: str, collection, embedding_model, decomposition_model: genai.GenerativeModel, synthesis_model: genai.GenerativeModel, n_results_per_subquery: int = 3):
+def agentic_rag_query(complex_query: str, collection, embedding_model, decomposition_model: genai.GenerativeModel, synthesis_model: genai.GenerativeModel, n_results_per_subquery: int = 7):
     """
     Executes an agentic RAG query by decomposing the complex query, performing
     multi-step retrieval, and synthesizing the results.
