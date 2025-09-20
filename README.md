@@ -38,6 +38,12 @@ Open config.py to set parameters such as embedding model, data_dir, etc.
 ```
 python embeddings.py
 ```
+6. Configure GOOGLE_API_KEY:
+```
+from google.colab import userdata
+import os
+os.environ["GOOGLE_API_KEY"] = userdata.get('GOOGLE_API_KEY')
+```
 6. Run the pipeline with user query
 ```
 python main.py --query "Compare the key risk factors of Microsoft and Google in 2023"
