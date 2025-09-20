@@ -22,7 +22,7 @@ def main():
     embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
     # Initialize ChromaDB (in-memory for now, or connect to persistent one)
-    client = chromadb.PersistentClient(path="COLLECTION_NAME")
+    client = chromadb.PersistentClient(path="./chroma_db")
     collection = client.get_collection(COLLECTION_NAME)
 
     # Load other models
