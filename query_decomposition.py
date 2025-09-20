@@ -7,8 +7,8 @@ import re # Import regular expression module
 
 # Initialize the Gemini API
 # Make sure you have added your GOOGLE_API_KEY to Colab secrets
-GOOGLE_API_KEY = userdata.get('GOOGLE_API_KEY')
-genai.configure(api_key=GOOGLE_API_KEY)
+# GOOGLE_API_KEY = userdata.get('GOOGLE_API_KEY')
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 
 # Initialize the Generative Model
 # Use an appropriate Gemini model name, e.g., 'gemini-1.5-flash-latest' or 'gemini-1.0-pro'
