@@ -108,7 +108,7 @@ def agentic_rag_query(complex_query: str, collection, embedding_model, decomposi
 
         # Attempt to parse the JSON output
         try:
-            parsed_output = json.loads(synthesis_output.strip('```json'))
+            parsed_output = json.loads(synthesis_output.strip('```json').strip('```')
             final_answer = parsed_output.get("answer", "Answer not found in JSON.")
             synthesis_reasoning = parsed_output.get("reasoning", "Reasoning not found in JSON.")
         except json.JSONDecodeError as e:
