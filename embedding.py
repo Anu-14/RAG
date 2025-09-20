@@ -90,7 +90,7 @@ print("Chunks saved to chunks_with_metadata.json")
 embedding_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
 
 # Initialize ChromaDB client 
-client = chromadb.PersistentClient(path="./COLLECTION_NAME")
+client = chromadb.PersistentClient(path="COLLECTION_NAME")
 
 # Create or get a collection
 collection_name = COLLECTION_NAME
