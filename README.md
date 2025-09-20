@@ -45,7 +45,7 @@ Otherwise set the GOOGLE_API_KEY in config.py and import in query_decomposition.
 ```
 6. Run the pipeline with user query
 ```
-python main.py --query "Compare the key risk factors of Microsoft and Google in 2023"
+python main.py --query_file <path to queries - defaults to sample_queries.txt> 
 ```
 
 ### How It Works (High-Level Pipeline)
